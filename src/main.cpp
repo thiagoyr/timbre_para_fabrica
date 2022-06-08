@@ -37,4 +37,3 @@ void set_four_alarm_on(int pin_alarma1,int pin_alarma2,int pin_alarma3,int pin_a
   digitalWrite(pin_alarma2, !on_value_alarms);
   digitalWrite(pin_alarma3, !on_value_alarms);
   digitalWrite(pin_alarma4, !on_value_alarms);
-}
