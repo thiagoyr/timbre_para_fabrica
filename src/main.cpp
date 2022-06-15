@@ -23,12 +23,34 @@ void setup(){
 }
 
 void loop(){
-  
+  bool first_ring = 1;
+  bool second_ring = 1;
+  bool third_ring = 1;
+
+  if(first_ring){
+    choose_alarms(1);
+    set_alarm(duration_of_alarm, alarms_states);
+  }
+  if(second_ring){
+    choose_alarms(2);
+    choose_alarms(4);
+    set_alarm(duration_of_alarm, alarms_states);
+  }
+  if(third_ring){
+    choose_alarms(1);
+    choose_alarms(2);
+    choose_alarms(3);
+    choose_alarms(4);
+    set_alarm(duration_of_alarm, alarms_states);
+  }
+
+  /*
   choose_alarms(2);
   choose_alarms(3);
   set_alarm(duration_of_alarm, alarms_states);
   choose_alarms(4);
   set_alarm(duration_of_alarm, alarms_states);
+  */
 }
 
 // FUNCIONES
