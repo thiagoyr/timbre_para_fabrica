@@ -9,7 +9,7 @@
 
 bool alarms_states[] = {false,false,false,false};
 
-void set_alarm(int duration_alarms, bool alarms[]);
+void set_enabled_alarms(int duration_alarms, bool alarms[]);
 void choose_alarms(int alarm_number);
 
 
@@ -23,38 +23,58 @@ void setup(){
 }
 
 void loop(){
-  bool first_ring = 1;
-  bool second_ring = 1;
-  bool third_ring = 1;
+  //one alarm
+  bool first_ring_one_alarm = true;
+  bool second_ring_one_alarm = true;
+  bool third_ring_one_alarm = true;
+  bool fourth_ring_one_alarm = true;
+  //two alarms
+  bool first_ring_two_alarm = true;
+  bool second_ring_two_alarm = true;
+  //four alarms
+  bool first_ring_four_alarm = true;
 
-  if(first_ring){
+  if(first_ring_one_alarm){
     choose_alarms(1);
-    set_alarm(duration_of_alarm, alarms_states);
+    set_enabled_alarms(duration_of_alarm, alarms_states);
   }
-  if(second_ring){
+  if(second_ring_one_alarm){
+    choose_alarms(2);
+    set_enabled_alarms(duration_of_alarm, alarms_states);
+  }
+  if(third_ring_one_alarm){
+    choose_alarms(3);
+    set_enabled_alarms(duration_of_alarm, alarms_states);
+  }
+  if(fourth_ring_one_alarm){
+    choose_alarms(4);
+    set_enabled_alarms(duration_of_alarm, alarms_states);
+  }
+
+
+  if(first_ring_two_alarm){
     choose_alarms(2);
     choose_alarms(4);
-    set_alarm(duration_of_alarm, alarms_states);
+    set_enabled_alarms(duration_of_alarm, alarms_states);
   }
-  if(third_ring){
+  if(second_ring_two_alarm){
+    choose_alarms(1);
+    choose_alarms(3);
+    set_enabled_alarms(duration_of_alarm, alarms_states);
+  }
+
+
+  if(first_ring_four_alarm){
     choose_alarms(1);
     choose_alarms(2);
     choose_alarms(3);
     choose_alarms(4);
-    set_alarm(duration_of_alarm, alarms_states);
+    set_enabled_alarms(duration_of_alarm, alarms_states);
   }
-
-  /*
-  choose_alarms(2);
-  choose_alarms(3);
-  set_alarm(duration_of_alarm, alarms_states);
-  choose_alarms(4);
-  set_alarm(duration_of_alarm, alarms_states);
-  */
 }
 
 // FUNCIONES
-void set_alarm(int duration_alarms, bool alarms_enabled[]){
+void set_enabled_alarms(int duration_alarms, bool alarms_enabled[]){
   digitalWrite(alarm1, alarms_enabled[0]);
   digitalWrite(alarm2, alarms_enabled[1]);
   digitalWrite(alarm3, alarms_enabled[2]);
@@ -67,7 +87,7 @@ void set_alarm(int duration_alarms, bool alarms_enabled[]){
   delay(duration_alarms);
   for(int i=0; i<=3;i++){
     alarms_states[i] = false;
-  }
+    }
   }
 
   void choose_alarms(int alarm_number){
@@ -76,6 +96,5 @@ void set_alarm(int duration_alarms, bool alarms_enabled[]){
     }else{
       Serial.println("The alarm number does not exist");
     }
-    
   }
 
