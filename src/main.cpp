@@ -22,23 +22,53 @@ void setup(){
   for(int i=0; i<number_of_alarms;i++){
     pinMode(alarm_pin[i],OUTPUT);
   }
+  Serial.println("Ready!");
 }
 
 void loop(){
+  
   int alarm_scenario = 1;
-  int nbr_alarm1 = 0;
-  int nbr_alarm2 = 0;
-  int nbr_alarm3 = 0;
-  int nbr_alarm4 = 0;
+  /*
+   * List of scenarios
+   * 1 = turn on alarm 1 
+   * 2 = turn on alarm 2
+   * 3 = turn on alarm 3
+   * 4 = turn on alarm 4
+   * 5 = turn on alarm 1 and 2
+   * 6 = turn on alarm 3 and 4
+   * 7 = turn on alarm 1, 2 , 3 and 4
+  */ 
+  while(!Serial.available()){
 
+  }
+  alarm_scenario = Serial.read()-48;
+  Serial.println(alarm_scenario);
   switch(alarm_scenario){
     case 1:
-     choose_alarm(nbr_alarm1);
-     break;
-    case 2:
-      choose_alarm2(nbr_alarm1,nbr_alarm2);
+      choose_alarm(1);
       break;
+    case 2:
+      choose_alarm(2);
+      break;
+    case 3:
+      choose_alarm(3);
+      break;
+    case 4:
+      choose_alarm(4);
+      break;
+    case 5:
+      choose_alarms2(1,2);
+      break;
+    case 6:
+      choose_alarms2(3,4);
+      break;
+    case 7:
+      choose_alarms4(1,2,3,4);
+      break;
+    default:
+      Serial.println("The selected scenario does not exist.");
   }
+  
   set_enabled_alarms(duration_of_alarm, alarms_states);
 }
 
