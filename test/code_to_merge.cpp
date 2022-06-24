@@ -42,7 +42,7 @@ void set_enabled_alarms(int duration_alarms, bool alarms_enabled[]){
   for(int i=0; i< number_of_alarms;i++){
     alarms_states[i] = false;
   }
-  delay(duration_alarms)
+  delay(duration_alarms);
   }
 
   /*Chooses which alarms to enable in a global bool vector called "alarm_states". Number of alarms starts at 1, and if the number isn't in the defined range of alarms it prints that the desired alarm does not exist.*/
