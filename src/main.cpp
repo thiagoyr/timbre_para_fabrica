@@ -48,6 +48,7 @@ void set_enabled_alarms(int duration_alarms, bool alarms[]);
 void choose_alarm(int alarm_number);
 void choose_alarms2(int alarm_number1, int alarm_number2);
 void choose_alarms4(int alarm_number1, int alarm_number2, int alarm_number3, int alarm_number4);
+void get_index_number();
 
 // es una forma de hacer sonar las alarmas(forma1)
 /* uint8_t alarm1[3] = {11, 10, 00};
@@ -65,19 +66,19 @@ void setup()
     while (Serial.available() == 0)
     {
     }
-    Serial.println("ENTER HOUR");
+    Serial.println(F("ENTER HOUR"));
     hhour = (Serial.parseInt());
-    Serial.println("ENTER MINUTE");
+    Serial.println(F("ENTER MINUTE"));
     mminute = (Serial.parseInt());
-    Serial.println("ENTER SECOND");
+    Serial.println(F("ENTER SECOND"));
     ssecond = (Serial.parseInt());
-    Serial.println("ENTER DAY");
+    Serial.println(F("ENTER DAY"));
     dday = (Serial.parseInt());
-    Serial.println("ENTER MONTH");
+    Serial.println(F("ENTER MONTH"));
     mmonth = (Serial.parseInt());
-    Serial.println("ENTER YEAR ultimas dos cifras");
+    Serial.println(F("ENTER YEAR ultimas dos cifras"));
     yyear = (Serial.parseInt()); // ver despues, no permite cuatro cifras
-    Serial.println("ya finalizo la configuracion");
+    Serial.println(F("ya finalizo la configuracion"));
 
     Serial.print(hhour);
     Serial.print(":");
@@ -90,98 +91,15 @@ void setup()
     Serial.print("/");
     Serial.println(yyear);
 
-    Serial.println("empieza configuracion del rtc");
+    Serial.println(F("empieza configuracion del rtc"));
     rtc.begin();
     rtc.adjust(DateTime(yyear, mmonth, dday, hhour, mminute, ssecond));
 
     rtc.disableAlarm(1);
     rtc.clearAlarm(1);
-
-    switch(now.hour()){
-        case 9:
-            for (uint8_t indexConfiguration = 0; indexConfiguration <= 8; indexConfiguration++)
-            {
-                if (now.minute() > alarms[indexConfiguration].minute())
-                {
-                    continue;
-                }
-                else
-                {
-                    index = indexConfiguration;
-                }
-            }
-            
-        break; case 10:
-            if (now.minute() < alarms[7].minute())
-            {
-                index = 7;
-            }
-            else
-                index = 8;
-
-        break; case 11: case 12:
-            index = 8;
-
-        break; case 13:
-            index = 9;
-
-        break; case 14: case 15:
-            index = 10;
-
-        break; case 16: case 17:
-            index = 11;
-
-        break; default:
-            index = 0;
-
-    } 
-
-
-
-
-
-    /* if (now.hour() == 9)
-    {
-        for (uint8_t indexConfiguration = 0; indexConfiguration <= 5; indexConfiguration++)
-        {
-            if (now.minute() > alarms[indexConfiguration].minute())
-            {
-                continue;
-            }
-            else
-            {
-                index = indexConfiguration + 1;
-            }
-        }
-    }
-    else if (now.hour() == 10)
-    {
-        if (now.minute() < alarms[7].minute())
-        {
-            index = 7;
-        }
-        else
-            index = 8;
-    }
-    else if (now.hour() == 11 || now.hour() == 12)
-    {
-        index = 8;
-    }
-    else if (now.hour() == 13)
-    {
-        index = 9;
-    }
-    else if (now.hour() == 14 || now.hour() == 15)
-    {
-        index = 10;
-    }
-    else if (now.hour() == 16 || now.hour() == 17)
-    {
-        index = 11;
-    }
-    else
-        index = 0; */
-
+    
+    get_index_number();
+    
     for (int i = 0; i < number_of_alarms; i++)
     {
         pinMode(alarm_pin[i], OUTPUT);
@@ -323,4 +241,88 @@ void choose_alarms4(int alarm_number1, int alarm_number2, int alarm_number3, int
     choose_alarm(alarm_number2);
     choose_alarm(alarm_number3);
     choose_alarm(alarm_number4);
-} 
+}
+
+void get_index_number()
+{
+    switch(now.hour()){
+        case 9:
+            for (uint8_t indexConfiguration = 0; indexConfiguration <= 8; indexConfiguration++)
+            {
+                if (now.minute() > alarms[indexConfiguration].minute())
+                {
+                    continue;
+                }
+                else
+                {
+                    index = indexConfiguration;
+                }
+            }
+            
+        break; case 10:
+            if (now.minute() < alarms[7].minute())
+            {
+                index = 7;
+            }
+            else
+                index = 8;
+
+        break; case 11: case 12:
+            index = 8;
+
+        break; case 13:
+            index = 9;
+
+        break; case 14: case 15:
+            index = 10;
+
+        break; case 16: case 17:
+            index = 11;
+
+        break; default:
+            index = 0;
+
+    }
+
+    /* if (now.hour() == 9)
+    {
+        for (uint8_t indexConfiguration = 0; indexConfiguration <= 5; indexConfiguration++)
+        {
+            if (now.minute() > alarms[indexConfiguration].minute())
+            {
+                continue;
+            }
+            else
+            {
+                index = indexConfiguration + 1;
+            }
+        }
+    }
+    else if (now.hour() == 10)
+    {
+        if (now.minute() < alarms[7].minute())
+        {
+            index = 7;
+        }
+        else
+            index = 8;
+    }
+    else if (now.hour() == 11 || now.hour() == 12)
+    {
+        index = 8;
+    }
+    else if (now.hour() == 13)
+    {
+        index = 9;
+    }
+    else if (now.hour() == 14 || now.hour() == 15)
+    {
+        index = 10;
+    }
+    else if (now.hour() == 16 || now.hour() == 17)
+    {
+        index = 11;
+    }
+    else
+        index = 0; */
+}
